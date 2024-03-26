@@ -33,7 +33,7 @@ trait SimpleCentrifugo
      *
      * @return array
      */
-    public function getSubscription(int $userId, array $channels, Carbon $exp): array
+    public function getSubscriptionToken(int $userId, array $channels, Carbon $exp): array
     {
         foreach ($channels as $channel) {
             $result[] = [
