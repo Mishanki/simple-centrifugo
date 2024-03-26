@@ -1,0 +1,52 @@
+{
+  "name": "larahook/simple-centrifugo",
+  "type": "library",
+  "description": "Connection and subscription tokens for centrifugo",
+  "keywords": [
+    "centrifugo",
+    "token",
+    "connection token",
+    "subscription token"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Mikhail Mishankin",
+      "email": "mishanki@yandex.ru"
+    }
+  ],
+  "homepage": "https://github.com/Mishanki/simple-centrifugo",
+  "support": {
+    "email": "mishanki@yandex.ru",
+    "issues": "https://github.com/Mishanki/simple-centrifugo/issues",
+    "source": "https://github.com/Mishanki/simple-centrifugo"
+  },
+  "require": {
+    "php": "^7.4|^8.0",
+    "laravel/framework": "^10.0",
+    "firebase/php-jwt": "*"
+  },
+  "require-dev": {
+  },
+  "autoload": {
+    "psr-4": {
+      "Larahook\\SimpleCentrifugo\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+      ]
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
