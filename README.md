@@ -12,6 +12,9 @@ CENTRIFUGO_TOKEN_HMAC_SECRET_KEY=YourKey
 ```
 
 ## Usage
+- Add `SimpleCentrifugo` trait to your class
+- Use method `getConnectionToken` for get connection token
+- And use method `getSubscriptionToken` for get subscription tokens
 ```php
 use Carbon\Carbon;
 use Larahook\SimpleCentrifugo\Trait\SimpleCentrifugo;
