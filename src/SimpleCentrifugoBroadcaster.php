@@ -64,7 +64,6 @@ class SimpleCentrifugoBroadcaster extends Broadcaster implements BroadcasterInte
      */
     public function validAuthenticationResponse($request, $result)
     {
-        var_dump(2);
         return $result;
     }
 
