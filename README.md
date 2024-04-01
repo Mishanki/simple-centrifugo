@@ -5,12 +5,6 @@
 composer require larahook/simple-centrifugo
 ```
 
-## Environment
-Add `HMAC_SECRET_KEY` to .env file
-```
-CENTRIFUGO_TOKEN_HMAC_SECRET_KEY=YourKey
-```
-
 ## Driver 
 Add `centrifugo` connection with `simple-centrifugo` driver to `config/broadcasting.php`
 ```php
