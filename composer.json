@@ -41,6 +41,7 @@
   "extra": {
     "laravel": {
       "providers": [
+        "Larahook\\SimpleCentrifugo\\SimpleCentrifugoServiceProvider"
       ]
     }
   },
