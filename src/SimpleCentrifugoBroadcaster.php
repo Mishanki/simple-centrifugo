@@ -155,20 +155,21 @@ class SimpleCentrifugoBroadcaster extends Broadcaster implements BroadcasterInte
      */
     private function makeResponseForClient(bool $access_granted, string $client)
     {
-        $info = [];
-
-        return $access_granted ? [
-            'sign' => $this->centrifugo->generateConnectionToken($client, 0, $info),
-            'info' => $info,
-        ] : [
-            'status' => 403,
-        ];
+        return $access_granted ? 
+            [
+                'sign' => $this->simpleCentrifugo->generateConnectionToken($client, 0, $info ?? []),
+                'info' => $info,
+            ] : 
+            [
+                'status' => 403,
+            ]
+        ;
     }
 
     /**
      * Make response for client, based on access rights of private channel.
      *
-     * @param bool   $access_granted
+     * @param bool $access_granted
      * @param string $channel
      * @param string $client
      *
@@ -176,16 +177,15 @@ class SimpleCentrifugoBroadcaster extends Broadcaster implements BroadcasterInte
      */
     private function makeResponseForPrivateClient(bool $access_granted, string $channel, string $client)
     {
-        $info = [];
-
-        return $access_granted ? [
-
-            'channel' => $channel,
-            'token'   => $this->centrifugo->generatePrivateChannelToken($client, $channel, 0, $info),
-            'info'    => $this->centrifugo->info(),
-
-        ] : [
-            'status' => 403,
-        ];
+        return $access_granted ?
+            [
+                'channel' => $channel,
+                'token' => $this->simpleCentrifugo->generatePrivateChannelToken($client, $channel, 0, $info ?? []),
+                'info' => $this->simpleCentrifugo->info(),
+            ] :
+            [
+                'status' => 403,
+            ]
+        ;
     }
 }
