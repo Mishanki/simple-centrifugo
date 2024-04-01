@@ -3,6 +3,8 @@
 namespace Larahook\SimpleCentrifugo;
 
 use Illuminate\Broadcasting\Broadcasters\Broadcaster;
+use Illuminate\Broadcasting\BroadcastException;
+use Illuminate\Http\Request;
 use Larahook\SanctumRefreshToken\Model\PersonalAccessToken;
 use Illuminate\Support\Facades\Route;
 use Laravel\Sanctum\Sanctum;
@@ -17,7 +19,7 @@ class SimpleCentrifugoBroadcaster extends Broadcaster implements BroadcasterInte
     /**
      * Authenticate the incoming request for a given channel.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return mixed
      */
     public function auth($request)
@@ -26,7 +28,7 @@ class SimpleCentrifugoBroadcaster extends Broadcaster implements BroadcasterInte
     /**
      * Return the valid authentication response.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  mixed  $result
      * @return mixed
      */
@@ -43,7 +45,7 @@ class SimpleCentrifugoBroadcaster extends Broadcaster implements BroadcasterInte
      * @param  array  $payload
      * @return void
      *
-     * @throws \Illuminate\Broadcasting\BroadcastException
+     * @throws BroadcastException
      */
     public function broadcast(array $channels, $event, array $payload = [])
     {}
