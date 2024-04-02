@@ -30,7 +30,7 @@ class SimpleCentrifugoServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('Larahook\SimpleCentrifugo\SimpleCentrifugo', function ($app) {
+        $this->app->bind(SimpleCentrifugo::class, function ($app) {
             $config = $app->make('config')->get('broadcasting.connections.centrifugo');
             $http = new HttpClient();
 
