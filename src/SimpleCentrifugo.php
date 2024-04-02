@@ -4,18 +4,10 @@ namespace Larahook\SimpleCentrifugo;
 
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\ClientException;
-use Illuminate\Broadcasting\Broadcasters\Broadcaster;
-use Illuminate\Broadcasting\BroadcastException;
-use Larahook\SanctumRefreshToken\Model\PersonalAccessToken;
-use Illuminate\Support\Facades\Route;
-use Laravel\Sanctum\Sanctum;
-use Illuminate\Broadcasting\Broadcasters\PusherBroadcaster;
-use Illuminate\Contracts\Broadcasting\Broadcaster as BroadcasterInterface;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class SimpleCentrifugo
 {
-    const API_PATH = '/api';
+    public const API_PATH = '/api';
 
     /**
      * Create a new Centrifugo instance.
@@ -26,32 +18,6 @@ class SimpleCentrifugo
     public function __construct(array $config, public HttpClient $httpClient)
     {
         $this->config = $this->initConfiguration($config);
-    }
-
-    /**
-     * Init centrifugo configuration.
-     *
-     * @param array $config
-     *
-     * @return array
-     */
-    protected function initConfiguration(array $config)
-    {
-        $defaults = [
-            'url' => 'http://localhost:8000',
-            'token_hmac_secret_key' => null,
-            'api_key' => null,
-            'ssl_key' => null,
-            'verify' => true,
-        ];
-
-        foreach ($config as $key => $value) {
-            if (array_key_exists($key, $defaults)) {
-                $defaults[$key] = $value;
-            }
-        }
-
-        return $defaults;
     }
 
     /**
@@ -291,6 +257,32 @@ class SimpleCentrifugo
     }
 
     /**
+     * Init centrifugo configuration.
+     *
+     * @param array $config
+     *
+     * @return array
+     */
+    protected function initConfiguration(array $config)
+    {
+        $defaults = [
+            'url' => 'http://localhost:8000',
+            'token_hmac_secret_key' => null,
+            'api_key' => null,
+            'ssl_key' => null,
+            'verify' => true,
+        ];
+
+        foreach ($config as $key => $value) {
+            if (\array_key_exists($key, $defaults)) {
+                $defaults[$key] = $value;
+            }
+        }
+
+        return $defaults;
+    }
+
+    /**
      * Get token hmac secret key.
      *
      * @return string
@@ -331,7 +323,7 @@ class SimpleCentrifugo
         $json = json_encode(['method' => $method, 'params' => $params]);
         $headers = [
             'Content-type' => 'application/json',
-            'Authorization' => 'apikey ' . $this->getApiKey(),
+            'Authorization' => 'apikey '.$this->getApiKey(),
         ];
 
         try {
@@ -350,7 +342,7 @@ class SimpleCentrifugo
 
             $response = $this->httpClient->post($this->prepareUrl(), $config->toArray());
 
-            $result = json_decode((string)$response->getBody(), true);
+            $result = json_decode((string) $response->getBody(), true);
         } catch (ClientException $e) {
             $result = [
                 'method' => $method,
@@ -370,13 +362,12 @@ class SimpleCentrifugo
     protected function prepareUrl()
     {
         $address = rtrim($this->getUrl(), '/');
-        if (substr_compare($address, static::API_PATH, -strlen(static::API_PATH)) !== 0) {
+        if (substr_compare($address, static::API_PATH, -\strlen(static::API_PATH)) !== 0) {
             $address .= static::API_PATH;
         }
 
         return $address;
     }
-
 
     /**
      * Safely encode string in base64.

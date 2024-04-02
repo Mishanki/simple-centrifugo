@@ -4,12 +4,8 @@ namespace Larahook\SimpleCentrifugo;
 
 use Illuminate\Broadcasting\Broadcasters\Broadcaster;
 use Illuminate\Broadcasting\BroadcastException;
-use Illuminate\Http\Request;
-use Larahook\SanctumRefreshToken\Model\PersonalAccessToken;
-use Illuminate\Support\Facades\Route;
-use Laravel\Sanctum\Sanctum;
-use Illuminate\Broadcasting\Broadcasters\PusherBroadcaster;
 use Illuminate\Contracts\Broadcasting\Broadcaster as BroadcasterInterface;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class SimpleCentrifugoBroadcaster extends Broadcaster implements BroadcasterInterface
@@ -22,7 +18,8 @@ class SimpleCentrifugoBroadcaster extends Broadcaster implements BroadcasterInte
     /**
      * Authenticate the incoming request for a given channel.
      *
-     * @param  Request  $request
+     * @param Request $request
+     *
      * @return mixed
      */
     public function auth($request)
@@ -50,16 +47,17 @@ class SimpleCentrifugoBroadcaster extends Broadcaster implements BroadcasterInte
             }
 
             return response($private ? $privateResponse : $response);
-        } else {
-            throw new HttpException(401);
         }
+
+        throw new HttpException(401);
     }
 
     /**
      * Return the valid authentication response.
      *
-     * @param  Request  $request
-     * @param  mixed  $result
+     * @param Request $request
+     * @param mixed $result
+     *
      * @return mixed
      */
     public function validAuthenticationResponse($request, $result)
@@ -70,23 +68,22 @@ class SimpleCentrifugoBroadcaster extends Broadcaster implements BroadcasterInte
     /**
      * Broadcast the given event.
      *
-     * @param  array  $channels
-     * @param  string  $event
-     * @param  array  $payload
-     * @return void
+     * @param array $channels
+     * @param string $event
+     * @param array $payload
      *
      * @throws BroadcastException
      */
     public function broadcast(array $channels, $event, array $payload = [])
     {
         $payload['event'] = $event;
-        $channels = array_map(function ($channel) {
+        $channels = array_map(static function ($channel) {
             return str_replace('private-', '$', (string) $channel);
         }, array_values($channels));
 
         $response = $this->simpleCentrifugo->broadcast($this->formatChannels($channels), $payload);
 
-        if (is_array($response) && !isset($response['error'])) {
+        if (\is_array($response) && !isset($response['error'])) {
             return;
         }
 
@@ -118,7 +115,7 @@ class SimpleCentrifugoBroadcaster extends Broadcaster implements BroadcasterInte
     {
         $channels = $request->get('channels', []);
 
-        return is_array($channels) ? $channels : [$channels];
+        return \is_array($channels) ? $channels : [$channels];
     }
 
     /**
@@ -148,22 +145,21 @@ class SimpleCentrifugoBroadcaster extends Broadcaster implements BroadcasterInte
     /**
      * Make response for client, based on access rights.
      *
-     * @param bool   $access_granted
+     * @param bool $access_granted
      * @param string $client
      *
      * @return array
      */
     private function makeResponseForClient(bool $access_granted, string $client)
     {
-        return $access_granted ? 
+        return $access_granted ?
             [
                 'sign' => $this->simpleCentrifugo->generateConnectionToken($client, 0, $info ?? []),
                 'info' => $info,
-            ] : 
+            ] :
             [
                 'status' => 403,
-            ]
-        ;
+            ];
     }
 
     /**
@@ -185,7 +181,6 @@ class SimpleCentrifugoBroadcaster extends Broadcaster implements BroadcasterInte
             ] :
             [
                 'status' => 403,
-            ]
-        ;
+            ];
     }
 }

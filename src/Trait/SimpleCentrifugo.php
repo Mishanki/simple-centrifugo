@@ -15,7 +15,7 @@ trait SimpleCentrifugo
      */
     public function getConnectionToken(int $userId, Carbon $exp): array
     {
-        $jwt = (new JWT)::encode([
+        $jwt = (new JWT())::encode([
             'sub' => (string) $userId,
             'exp' => $exp->timestamp,
         ], getenv('CENTRIFUGO_TOKEN_HMAC_SECRET_KEY'), 'HS256');
@@ -38,7 +38,7 @@ trait SimpleCentrifugo
         foreach ($channels as $channel) {
             $result[] = [
                 'channel' => $channel,
-                'token' => (new JWT)::encode(
+                'token' => (new JWT())::encode(
                     [
                         'sub' => (string) $userId,
                         'channel' => $channel,
