@@ -60,6 +60,7 @@ class ChannelService
 ```
 
 ### Event example
+Push message to centrifugo channel via laravel events
 ```php
 
 namespace App\Events;
