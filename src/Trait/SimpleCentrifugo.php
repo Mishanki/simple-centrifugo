@@ -8,12 +8,12 @@ use Firebase\JWT\JWT;
 trait SimpleCentrifugo
 {
     /**
-     * @param int $userId
+     * @param int|string $userId
      * @param Carbon $exp
      *
      * @return array
      */
-    public function getConnectionToken(int $userId, Carbon $exp): array
+    public function getConnectionToken(int|string $userId, Carbon $exp): array
     {
         $jwt = (new JWT())::encode([
             'sub' => (string) $userId,
@@ -27,13 +27,13 @@ trait SimpleCentrifugo
     }
 
     /**
-     * @param int $userId
+     * @param int|string $userId
      * @param array $channels
      * @param Carbon $exp
      *
      * @return array
      */
-    public function getSubscriptionToken(int $userId, array $channels, Carbon $exp): array
+    public function getSubscriptionToken(int|string $userId, array $channels, Carbon $exp): array
     {
         foreach ($channels as $channel) {
             $result[] = [
