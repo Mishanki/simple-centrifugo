@@ -15,7 +15,7 @@ class SimpleCentrifugo
      * @param array $config
      * @param HttpClient $httpClient
      */
-    public function __construct(array $config, public HttpClient $httpClient)
+    public function __construct(protected array $config, public HttpClient $httpClient)
     {
         $this->config = $this->initConfiguration($config);
     }
