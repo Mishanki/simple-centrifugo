@@ -13,7 +13,7 @@ class SimpleCentrifugoServiceProvider extends ServiceProvider
      */
     public function boot(BroadcastManager $broadcastManager)
     {
-        $broadcastManager->extend('simple-centrifugo', static function ($app) {
+        $broadcastManager->extend('simple-centrifugo', function ($app) {
             return new SimpleCentrifugoBroadcaster($app->make(SimpleCentrifugo::class));
         });
     }
